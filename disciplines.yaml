@@ -1,0 +1,21 @@
+- name: Математика
+  assignments:
+    - name: Типовой Расчёт
+      deadline: 2024-05-20
+      maxPoints: 45
+    - name: Тест 1
+      deadline: 2024-05-20
+      maxPoints: 25
+- name: Физика
+  assignments:
+    - name: Л/Р 1
+      deadline: 2024-05-20
+      maxPoints: 20
+    - name: Л/Р 2
+      deadline: 2024-05-20
+      maxPoints: 20
+- name: Английский язык
+  assignments:
+    - name: Тест 1
+      deadline: 2024-05-20
+      maxPoints: 20

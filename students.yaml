@@ -1,0 +1,29 @@
+- name: Иван Иванов
+  disciplines:
+    - Математика
+    - Физика
+  assignments:
+    - discipline: Математика
+      assignment: Типовой Расчёт
+      date: 2024-05-18
+      grade: 40
+    - discipline: Математика
+      assignment: Типовой Расчёт
+      date: 2024-05-19
+      grade: 45
+    - discipline: Физика
+      assignment: Л/Р 1
+      date: 2024-05-18
+      grade: 15
+  birthday: '2004-12-31'
+  faculty: 'ИАТИТ'
+- name: Павел Зинин
+  disciplines:
+    - Английский язык
+  assignments:
+    - discipline: Английский язык
+      assignment: Тест 1
+      date: 2024-05-18
+      grade: 19
+  birthday: '2004-12-31'
+  faculty: 'ИАТИТ'
