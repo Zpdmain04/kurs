@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "target": "es5",
+      "module": "commonjs",
+      "lib": ["es6", "dom", "es2017"],
+      "strict": true,
+      "declaration": true,
+      "outDir": "dist",
+      "sourceMap": true,
+      "noImplicitOverride": true, 
+      "downlevelIteration": true
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
+  }
