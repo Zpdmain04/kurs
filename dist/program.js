@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -127,7 +138,7 @@ var MongoDB = /** @class */ (function () {
     };
     MongoDB.prototype.saveData = function (collname, data) {
         return __awaiter(this, void 0, void 0, function () {
-            var collection, data_1, data_1_1, item, e_1_1;
+            var collection, data_1, data_1_1, item, origdoc, updoc, e_1_1;
             var e_1, _a;
             return __generator(this, function (_b) {
                 switch (_b.label) {
@@ -135,31 +146,44 @@ var MongoDB = /** @class */ (function () {
                         collection = this.db.collection(collname);
                         _b.label = 1;
                     case 1:
-                        _b.trys.push([1, 6, 7, 8]);
+                        _b.trys.push([1, 9, 10, 11]);
                         data_1 = __values(data), data_1_1 = data_1.next();
                         _b.label = 2;
                     case 2:
-                        if (!!data_1_1.done) return [3 /*break*/, 5];
+                        if (!!data_1_1.done) return [3 /*break*/, 8];
                         item = data_1_1.value;
-                        return [4 /*yield*/, collection.updateOne({ name: item.name }, { $set: item }, { upsert: true })];
+                        return [4 /*yield*/, collection.findOne({ name: item.name })];
                     case 3:
-                        _b.sent();
-                        _b.label = 4;
+                        origdoc = _b.sent();
+                        if (!!origdoc) return [3 /*break*/, 5];
+                        return [4 /*yield*/, collection.insertOne(item)];
                     case 4:
+                        _b.sent();
+                        _b.label = 5;
+                    case 5:
+                        updoc = __assign(__assign({}, origdoc), item);
+                        if (JSON.stringify(origdoc) === JSON.stringify(updoc)) {
+                            return [3 /*break*/, 7];
+                        }
+                        return [4 /*yield*/, collection.updateOne({ name: item.name }, { $set: item })];
+                    case 6:
+                        _b.sent();
+                        _b.label = 7;
+                    case 7:
                         data_1_1 = data_1.next();
                         return [3 /*break*/, 2];
-                    case 5: return [3 /*break*/, 8];
-                    case 6:
+                    case 8: return [3 /*break*/, 11];
+                    case 9:
                         e_1_1 = _b.sent();
                         e_1 = { error: e_1_1 };
-                        return [3 /*break*/, 8];
-                    case 7:
+                        return [3 /*break*/, 11];
+                    case 10:
                         try {
                             if (data_1_1 && !data_1_1.done && (_a = data_1.return)) _a.call(data_1);
                         }
                         finally { if (e_1) throw e_1.error; }
                         return [7 /*endfinally*/];
-                    case 8: return [2 /*return*/];
+                    case 11: return [2 /*return*/];
                 }
             });
         });
