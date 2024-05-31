@@ -68,9 +68,17 @@ class MongoDB {
   }
 
   async saveData(collname: string, data: any) {
-    const collection = this.db.collection(collname)
+    const collection = this.db.collection(collname);
     for (const item of data) {
-      await collection.updateOne({name: item.name}, {$set: item}, { upsert: true })
+      const origdoc = await collection.findOne({name: item.name});
+      if (!origdoc) {
+        await collection.insertOne(item);
+      }
+      const updoc = { ...origdoc, ...item };
+      if (JSON.stringify(origdoc) === JSON.stringify(updoc)) {
+        continue
+      }
+      await collection.updateOne({name: item.name}, {$set: item});
     }
   }
 
