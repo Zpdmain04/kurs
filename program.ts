@@ -106,6 +106,25 @@ async function loadStudents() {
     const MONGO = new MongoDB('mongodb://root:example@127.0.0.1:27017/', 'Students_n_Disciplines')
     await MONGO.connect()
     const studentsData = yaml.load(fs.readFileSync('students.yaml', 'utf-8')) as Student[]
+    {
+    const disciplines = await MONGO.getData('Disciplines')
+    const disciplineNames = disciplines.map(d => d.name)
+    const assignmentNames = disciplines.flatMap(d => d.assignments.map((a: { name: any; }) => a.name))
+    for (const student of studentsData) {
+      for (const discipline of student.disciplines) {
+        if (!disciplineNames.includes(discipline)) {
+          throw new Error(`Дисциплина "${discipline}"
+          студента "${student.name}" не найдена в списке дисциплин.`)
+        }
+      }
+      for (const assignment of student.assignments) {
+        if (!assignmentNames.includes(assignment.assignment)) {
+          throw new Error(`Задание "${assignment.assignment}" по дисциплине
+          "${assignment.discipline}" студента "${student.name}" не найдено в списке заданий.`)
+        }
+        }
+      }
+    }
     await MONGO.saveData('Students', studentsData)
     console.log('Студенты успешно загружены в MongoDB.')
     await MONGO.disconnect()
